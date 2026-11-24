@@ -350,6 +350,7 @@ function _fit!(o::ExtremeValues{T,S}, pr::Pair{<:S, Int}) where {T,S}
 end
 
 function _merge!(a::ExtremeValues, b::ExtremeValues)
+    a.b <= b.b || error("Can't merge ExtremeValues with smaller capacity into one with bigger capacity.")
     n = a.n + b.n
     foreach(pr -> _fit!(a, pr), merge(b.lo, b.hi))  # each distinct value once
     a.n = n
